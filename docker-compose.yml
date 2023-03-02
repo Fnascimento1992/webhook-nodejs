@@ -1,0 +1,31 @@
+version: '3'
+services:
+#### APP em node
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - webhook.env
+    volumes:
+      - ./:/app/
+    command: npm run dev
+  
+#### RabbitMQ  
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    env_file: 
+      - webhook.env
+
+#### MongoDB
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"     
+    env_file: 
+      - webhook.env
