@@ -8,10 +8,12 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - webhook.env
+      - .env
     volumes:
       - ./:/app/
     command: npm run dev
+    networks:
+      - webhook_net
   
 #### RabbitMQ  
   rabbitmq:
@@ -20,7 +22,9 @@ services:
       - "5672:5672"
       - "15672:15672"
     env_file: 
-      - webhook.env
+      - .env
+    networks:
+      - webhook_net
 
 #### MongoDB
   mongo:
@@ -28,16 +32,26 @@ services:
     ports:
       - "27017:27017"     
     env_file: 
-      - webhook.env
-
+      - .env
+    networks:
+      - webhook_net
 #### Mongo Express
   mogno-Express:
     image: mongo-express
     ports:
-      - "80:80"
+      - "8081:8081"
     environment: 
       - ME_CONFIG_MONGODB_URL=mongodb://mongo:27017
-      - ME_CONFIG_MONGODB_DB=webhook
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_DB=${DB_NAME}
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${DB_USER}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${DB_PASS}
+     #- ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_PORT=${DB_PORT}
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=${DB_USER}
+    networks:
+      - webhook_net
+
+
+#### networks all containers
+networks:
+  webhook_net:
