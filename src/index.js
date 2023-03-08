@@ -1,7 +1,8 @@
 const express = require('express');
+require('dotenv').config()
+
 const MongoConnect = require('../db/connect')
 const logger = require('../logs/logger')
-require('dotenv').config()
 const bodyParser = require('body-parser')
 
 const app = express()
