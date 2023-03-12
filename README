@@ -1,3 +1,22 @@
 Modelo de webhook em nodejs
 
 # Em desenvolvimento
+
+Necessário posuir
+Node
+Docker e Docker compose
+
+Passo a passo para execução do projeto:
+
+1. Instalar o Node.js
+2. Instalar o npm
+3. Executar o comando npm i
+4. Copiar o arquivo webhook-exemple.env e renomear para .env
+4. Executar o comando docker compose up -d
+
+
+Descrição do projeto
+
+ApiREST com endpoint para receber os dados do webhook. 
+Os dados serão encaminhados para um virtual host e fila especificado no RabbitMQ.
+

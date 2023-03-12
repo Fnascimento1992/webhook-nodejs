@@ -1,20 +1,14 @@
-const express = require('express');
-require('dotenv').config()
+const express = require("express")
+require("dotenv").config()
 
-const MongoConnect = require('../db/connect')
-const logger = require('../logs/logger')
-const bodyParser = require('body-parser')
 
-const app = express()
+const callback = require("./routes/callback")
 
-//MongoConnect()
+const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.use(callback)
 
-  logger.info("Acesso na rota")
-});
 
 app.listen(3000, () => {
-  console.log('App listening on port 3000');
-});
+  console.log("App listening on port 3000")
+})
